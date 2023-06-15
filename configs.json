@@ -1,23 +1,18 @@
 {
     "request_url": "https://fanyi-api.baidu.com/api/trans/vip/translate",
-    "private_key": "",
-    "appid": "",
-    "engine": "google",
     "engines": [
         "google",
         "baidu_api"
     ],
     "languages": [
-        "Chinese(simplified)",
-        "Chinese(traditional)",
+        "Chinese (simplified)",
+        "Chinese (traditional)",
         "English",
         "French",
         "Russian",
         "Japanese",
         "Korean"
     ],
-    "src_lang_index": 0,
-    "dest_lang_index": 3,
     "languages_for_google": [
         "zh-cn",
         "zh-tw",
@@ -35,5 +30,19 @@
         "ru",
         "jp",
         "kor"
-    ]
+    ],
+    "languages_for_tesseract": [
+        "chi_sim",
+        "chi_tra",
+        "eng",
+        "fra",
+        "rus",
+        "jpn",
+        "kor"
+    ],
+    "modes": [
+        "light", 
+        "dark"
+    ],
+    "tessdata_dir_config": "./tessdata"
 }
