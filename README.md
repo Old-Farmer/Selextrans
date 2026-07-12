@@ -32,7 +32,7 @@ python3 run.py # run the app
 ### Linux
 
 * xclip
-* tesseract ocr engine (**no data file need to be downloaded**)
+* tesseract ocr engine (**optional, no data file need to be downloaded**)
 
 ```shell
 sudo apt install xclip tesseract-ocr
@@ -40,7 +40,7 @@ sudo apt install xclip tesseract-ocr
 
 ### Windows
 
-* tesseract ocr engine (**no data file need to be downloaded**). Check the website [Home · UB-Mannheim/tesseract Wiki · GitHub](https://github.com/UB-Mannheim/tesseract/wiki) and install Tesseract. Just Install it in the **default configure**, and choose a path to install it. Do not forget to set `"tesseract_cmd"` in `data/settings.json` which will be explained in **Settings** with details.
+* tesseract ocr engine (**optional, no data file need to be downloaded**). Check the website [Home · UB-Mannheim/tesseract Wiki · GitHub](https://github.com/UB-Mannheim/tesseract/wiki) and install Tesseract. Just Install it in the **default configure**, and choose a path to install it. Do not forget to set `"tesseract_cmd"` in `data/settings.json` which will be explained in **Settings** with details.
 
 ### Requirements for Python packages
 
@@ -67,7 +67,6 @@ source .venv/bin/activate
 pip install -r requirements.txt --upgrade
 
 # Windows
-
 python -m venv .venv
 .venv/Scripts/activate.bat # In CMD
 .venv/Scripts/Activate.ps1 # In Powershell
