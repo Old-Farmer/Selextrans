@@ -597,7 +597,7 @@ class Gui:
 
         self.kbController_ = KeyController()
 
-        self.CreateListener()
+        # self.CreateListener()
 
         # backend threads for time consuming tasks and some ui updates
         # as tkinter is thread safe, we simply do some ui updates in the backend threads for convenience
@@ -637,6 +637,9 @@ class Gui:
         self.command_entry_.bind("<Control-A>", EntrySelectAll)
         self.command_entry_.bind("<Return>", self.HandleCommand)
 
+        self.root_.bind("<Unmap>", self.OnUnmap)
+        self.root_.bind("<Map>", self.OnMap)
+
     def Loop(self):
         self.root_.mainloop()
 
@@ -646,11 +649,7 @@ class Gui:
         self.root_.withdraw()
         ttk.Style().theme_use("default")
         self.root_.option_clear()
-        self.listener_.stop()
-        try:
-            self.mouse_listener_.stop()
-        except:
-            pass
+        Gui.UnbindRecursively(self.root_)
         self.Init()
         self.root_.geometry(geometry_info)
         self.root_.deiconify()
@@ -684,19 +683,33 @@ class Gui:
         self.listener_.start()
         # self.listener_.join()
 
-    # def OnMinimize(self, event):
-    #     print("mini")
-    #     self.listener_.stop()
-    #     self.mouse_listener_.stop()
+    def StopListener(self):
+        try:
+            if hasattr(self, "listener_"):
+                self.listener_.stop()
+            if hasattr(self, "mouse_listener_"):
+                self.mouse_listener_.stop()
+        except Exception as e:
+            messagebox.showerror(message=str(e))
+            raise e
 
-    # def OnRestore(self, event):
-    #     print("res")
-    #     try:
-    #         self.listener_.stop()
-    #         self.mouse_listener_.stop()
-    #     except:
-    #         pass
-    #     self.CreateListener()
+    def OnUnmap(self, event):
+        if event.widget != self.root_:
+            return
+        self.StopListener()
+
+    def OnMap(self, event):
+        if event.widget != self.root_:
+            return
+        self.StopListener()
+        self.CreateListener()
+
+    @staticmethod
+    def UnbindRecursively(widget):
+        for sequence in widget.bind():
+            widget.unbind(sequence)
+        for child in widget.winfo_children():
+            Gui.UnbindRecursively(child)
 
     def SetTranslator(self):
         engine = settings["engine"]
@@ -773,13 +786,7 @@ class Gui:
     def DoTrans(self, content_from_input_text=False, content=""):
         if content_from_input_text:
             content = self.input_text_.get("1.0", tk.END)
-            content = ProcessText(content)
-        else:
-            content = ProcessText(content)
-            if (
-                content == self.input_text_.get("1.0", tk.END)[0:-1]
-            ):  # the same, so return; str from input text will have a following \n
-                return
+        content = ProcessText(content)
 
         # trans = BaiduTranslate(content.replace('\n', '\\n'), 'en')[1].replace('\\', '\n') # baidu api has some problems with '\n'
         self.input_text_.delete("1.0", tk.END)
@@ -845,3 +852,4 @@ Usage:\n\
         else:
             # self.command_entry_.grid_forget()  # successful, hide the command entry
             pass
+

@@ -23,8 +23,8 @@ cd Selextrans
 sudo apt install python3
 python3 -m venv .venv
 source .venv/bin/activate
-./setup.sh # Set up before first running the app
-python3 run.py # run the app
+python setup.sh # Set up before first running the app
+python run.py # run the app
 ```
 
 ## Dependencies
