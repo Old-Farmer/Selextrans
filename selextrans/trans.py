@@ -612,7 +612,9 @@ class Gui:
         self.input_text_.bind("<Control-a>", TextSelectAll)
         self.input_text_.bind("<Control-A>", TextSelectAll)
         self.input_text_.bind(
-            "<Return>", lambda event: self.thread_pool_.submit(self.DoTrans, True)
+            "<Return>",
+            lambda event: self.thread_pool_.submit(self.DoTrans, True),
+            False,
         )
         self.root_.bind("<F5>", self.Refresh)
 
@@ -852,4 +854,3 @@ Usage:\n\
         else:
             # self.command_entry_.grid_forget()  # successful, hide the command entry
             pass
-
